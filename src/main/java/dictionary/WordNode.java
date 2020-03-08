@@ -1,6 +1,7 @@
 package dictionary;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +51,18 @@ public class WordNode {
 
     protected boolean hasNext(){
         return nextChar != null;
+    }
+
+    public void getWords(String suff, List<String> words){
+        if(isWord){
+            words.add(suff + ch);
+        }
+        if(nextChar == null || nextChar.size() == 0){
+            return;
+        }
+        for(WordNode node:nextChar.values()){
+            node.getWords(suff + ch, words);
+        }
     }
 
 }

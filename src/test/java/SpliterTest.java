@@ -20,19 +20,35 @@ public class SpliterTest {
         dictionary.loadDictionary(resourcePath);
 
         WordSpliter spliter = new WordSpliter();
-        spliter.addDictionary(dictionary);
-        List<String> result = spliter.split("ilikesamsungmobile");
+//        spliter.addDictionary(dictionary);
+        List<String> result = spliter.split("ilikesamsungmobile", dictionary);
         assertEquals(2, result.size());
         assertEquals("i like sam sung mobile", result.get(0));
         assertEquals("i like samsung mobile", result.get(1));
 
-        result = spliter.split("ilikeicecreamandmango");
+        result = spliter.split("ilikeicecreamandmango", dictionary);
         assertEquals(1, result.size());
         assertEquals("i like ice cream and man go", result.get(0));
 
 //        for(String s : result){
 //            System.out.println(s);
 //        }
+    }
+
+    @Test
+    public void dictionaryMergeTest() throws Exception {
+        Dictionary dictionary = new MyDictionary();
+        //获取路径
+        String resourcePath = getClass().getResource("initDict.txt").getPath();
+        //读取文件
+        dictionary.loadDictionary(resourcePath);
+
+        Dictionary dictionary1 = new MyDictionary();
+        dictionary1.addWord("new");
+
+        dictionary.mergeDictionary(dictionary1);
+        assertEquals(1, dictionary.isWord("new"));
+        assertEquals(1, dictionary.isWord("like"));
     }
 
     @Test

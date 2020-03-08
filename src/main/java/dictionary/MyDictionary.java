@@ -2,7 +2,9 @@ package dictionary;
 
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyDictionary implements Dictionary {
@@ -21,6 +23,28 @@ public class MyDictionary implements Dictionary {
         }
     }
 
+
+    @Override
+    public void mergeDictionary(Dictionary dictionary) throws Exception{
+        if(!(dictionary instanceof  MyDictionary)){
+            throw new RuntimeException("类型不正确");
+        }
+        for(String word:dictionary.getAllWord()){
+            addWord(word);
+        }
+    }
+
+    @Override
+    public List<String> getAllWord() {
+        //遍历树
+        List<String> words = new ArrayList<String>();
+
+        for(WordNode wordNode : wordNodeMap.values()){
+            wordNode.getWords("", words);
+        }
+
+        return words;
+    }
 
     public boolean isWordHasNext(String word) {
         if(word == null || word.isEmpty()){

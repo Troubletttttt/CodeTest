@@ -1,4 +1,5 @@
 import dictionary.Dictionary;
+import dictionary.MyDictionary;
 import dictionary.WordNode;
 import javafx.util.Pair;
 
@@ -8,17 +9,15 @@ import java.util.Stack;
 
 public class WordSpliter {
 
-    List<Dictionary> dicts;
-
-    public List<String> split(String str){
-        List<String> result = new ArrayList<String>();
+    public List<String> split(String str, List<Dictionary> dicts) throws Exception {
+        Dictionary allDictionary = new MyDictionary();
         for(Dictionary dictionary : dicts){
-            result.addAll(split(str, dictionary));
+            allDictionary.mergeDictionary(dictionary);
         }
-        return result;
+        return split(str, allDictionary);
     }
 
-    private List<String> split(String str, Dictionary dictionary){
+    public List<String> split(String str, Dictionary dictionary){
         //存放结果
         List<String> result = new ArrayList<String>();
         //作为回滚的栈，即单词可能出现后缀，会有多个分支,类似于树的遍历，用栈记录状态
@@ -70,17 +69,5 @@ public class WordSpliter {
             this.tmpWord = tmpWord;
             this.currStr = currStr;
         }
-    }
-
-    //为分离器添加一个字典
-    public void addDictionary(Dictionary dict){
-        if(dicts == null){
-            dicts = new ArrayList<Dictionary>();
-        }
-        dicts.add(dict);
-    }
-    //清空已有的字典
-    public void cleanDicts(){
-        dicts = new ArrayList<Dictionary>();
     }
 }

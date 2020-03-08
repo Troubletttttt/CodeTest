@@ -2,6 +2,7 @@ package dictionary;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 public interface Dictionary {
 
@@ -31,4 +32,9 @@ public interface Dictionary {
      * @param path
      */
     void loadDictionary(String path) throws IOException;
+
+    //合并两个字典
+    void mergeDictionary(Dictionary dictionary) throws Exception;
+
+    List<String> getAllWord();
 }
