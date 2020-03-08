@@ -4,11 +4,47 @@ import dictionary.MyDictionary;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class SpliterTest {
+
+    @Test
+    public void SplitTest3() throws Exception {
+        //测试能否从文件加载字典，并且能否正确查找到对应的单词，正确的错误的情况都要
+        Dictionary dictionary = new MyDictionary();
+        //获取路径
+        String resourcePath = getClass().getResource("initDict.txt").getPath();
+        //读取文件
+        dictionary.loadDictionary(resourcePath);
+
+        Dictionary dictionary2 = new MyDictionary("new", "i");
+
+        List<Dictionary> dictionaries = new ArrayList<Dictionary>();
+        dictionaries.add(dictionary);
+        dictionaries.add(dictionary2);
+
+        WordSpliter spliter = new WordSpliter();
+//        spliter.addDictionary(dictionary);
+        List<String> result = spliter.split("ilikenewsamsungmobile", dictionaries);
+        assertEquals(2, result.size());
+        assertEquals("i like new sam sung mobile", result.get(0));
+        assertEquals("i like new samsung mobile", result.get(1));
+    }
+
+    @Test
+    public void SplitTestStage2() throws Exception{
+        Dictionary dictionary = new MyDictionary("i", "like", "sam", "sung",
+                "mobile", "icecream", "man go", "mango", "and");
+        WordSpliter spliter = new WordSpliter();
+        List<String> result = spliter.split("ilikeicecreamandmango", dictionary);
+        assertEquals(1, result.size());
+        assertEquals("i like icecream and mango", result.get(0));
+        result = spliter.split("ilikeicecreamandman go", dictionary);
+        assertEquals("i like icecream and man go", result.get(0));
+    }
 
     @Test
     public void SplitTest() throws IOException {
@@ -29,10 +65,6 @@ public class SpliterTest {
         result = spliter.split("ilikeicecreamandmango", dictionary);
         assertEquals(1, result.size());
         assertEquals("i like ice cream and man go", result.get(0));
-
-//        for(String s : result){
-//            System.out.println(s);
-//        }
     }
 
     @Test
