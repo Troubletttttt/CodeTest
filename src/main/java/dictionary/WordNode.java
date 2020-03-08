@@ -48,4 +48,8 @@ public class WordNode {
         nextChar.put(ch, node);
     }
 
+    protected boolean hasNext(){
+        return nextChar != null;
+    }
+
 }

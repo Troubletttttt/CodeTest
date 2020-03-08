@@ -8,9 +8,10 @@ public interface Dictionary {
     /**
      * 判断所给字符串是否在字典中
      * @param word 要查找的单词
-     * @return 在则返回true，否则返回false
+     * @return  -1：表示找不到单词，并且没有后续；0：找不到单词，但是可能有后续
+     *          1：找到单词，但是没有后续了  2：找到单词，并且可能有后续
      */
-    boolean isWord(String word);
+    int isWord(String word);
 
     /**
      * 向字典中添加一个单词

@@ -23,7 +23,22 @@ public class MyDictionary implements Dictionary {
 
 
     public boolean isWordHasNext(String word) {
-        return false;
+        if(word == null || word.isEmpty()){
+            return false;
+        }
+        word = word.toUpperCase();
+        char[] chs = word.toCharArray();
+        WordNode node = wordNodeMap.get(word.charAt(0));
+        for(int i = 1; i < chs.length; ++i){
+            if(node == null){
+                return false;
+            }
+            node = node.getNextNode(chs[i]);
+        }
+        if(node == null || !node.isWord()){
+            return false;
+        }
+        return node.hasNext();
     }
 
     public void addWord(String word) {
@@ -53,24 +68,34 @@ public class MyDictionary implements Dictionary {
 
         node.setIsWord(true);
     }
-
-    public boolean isWord(String word) {
+    /**
+     * 判断所给字符串是否在字典中
+     * @param word 要查找的单词
+     * @return  -1：表示找不到单词，并且没有后续；0：找不到单词，但是可能有后续
+     *          1：找到单词，但是没有后续了  2：找到单词，并且可能有后续
+     */
+    public int isWord(String word) {
         if(word == null || word.isEmpty()){
-            return false;
+            return -1;
         }
         word = word.toUpperCase();
         char[] chs = word.toCharArray();
         WordNode node = wordNodeMap.get(word.charAt(0));
         for(int i = 1; i < chs.length; ++i){
             if(node == null){
-                return false;
+                return -1;
             }
             node = node.getNextNode(chs[i]);
         }
-        if(node == null || !node.isWord()){
-            return false;
+        if(node == null){
+            return -1;
+        }else if(!node.isWord()){
+            return 0;
+        }else if(!node.hasNext()){
+            return 1;
+        }else{
+            return 2;
         }
-        return true;
     }
 
     public void loadDictionary(String path) throws IOException {
