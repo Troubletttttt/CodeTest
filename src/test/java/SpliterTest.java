@@ -13,7 +13,6 @@ public class SpliterTest {
 
     @Test
     public void SplitTest3() throws Exception {
-        //测试能否从文件加载字典，并且能否正确查找到对应的单词，正确的错误的情况都要
         Dictionary dictionary = new MyDictionary();
         //获取路径
         String resourcePath = getClass().getResource("initDict.txt").getPath();
@@ -48,7 +47,6 @@ public class SpliterTest {
 
     @Test
     public void SplitTest() throws IOException {
-        //测试能否从文件加载字典，并且能否正确查找到对应的单词，正确的错误的情况都要
         Dictionary dictionary = new MyDictionary();
         //获取路径
         String resourcePath = getClass().getResource("initDict.txt").getPath();

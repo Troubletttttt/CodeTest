@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 字典采用森林的存储方式，便于查找
+ * 插入单词比较耗时，但是如果是频繁用于查找的话代价是值得的
+ * 在单词量少的时候比较耗费存储空间，但是当单词量多，且有大量的单词有着相同前缀的时候，存储空间反而会更小
+ */
 public class MyDictionary implements Dictionary {
 
     private Map<Character, WordNode> wordNodeMap;
